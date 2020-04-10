@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1591</width>
-    <height>938</height>
+    <width>1518</width>
+    <height>885</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -26,279 +26,400 @@
      <verstretch>0</verstretch>
     </sizepolicy>
    </property>
-   <layout class="QVBoxLayout" name="verticalLayout_2">
+   <layout class="QVBoxLayout" name="verticalLayout_4">
     <item>
-     <layout class="QHBoxLayout" name="mainPageLayout">
-      <property name="sizeConstraint">
-       <enum>QLayout::SetNoConstraint</enum>
+     <widget class="QTabWidget" name="viewTabWidget">
+      <property name="minimumSize">
+       <size>
+        <width>1500</width>
+        <height>0</height>
+       </size>
       </property>
-      <item>
-       <widget class="QTabWidget" name="viewTabWidget">
-        <property name="minimumSize">
-         <size>
-          <width>1500</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="currentIndex">
-         <number>0</number>
-        </property>
-        <widget class="QWidget" name="imageViewTab">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <attribute name="title">
-          <string>Image View</string>
-         </attribute>
-         <layout class="QVBoxLayout" name="verticalLayout_8">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="imageViewTab">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <attribute name="title">
+        <string>Image View</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
-           <layout class="QVBoxLayout" name="verticalLayout_4">
+           <layout class="QVBoxLayout" name="infoLayout">
             <item>
-             <widget class="QTabWidget" name="imageTypeSelector">
-              <property name="currentIndex">
-               <number>0</number>
-              </property>
-              <widget class="QWidget" name="rawImage">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <attribute name="title">
-                <string>Image</string>
-               </attribute>
-               <layout class="QHBoxLayout" name="horizontalLayout_10">
+             <layout class="QHBoxLayout" name="horizontalLayout_2">
+              <item>
+               <layout class="QVBoxLayout" name="fileListLayout">
                 <item>
-                 <layout class="QVBoxLayout" name="verticalLayout">
-                  <item>
-                   <widget class="GraphicsView" name="rawImageView"/>
-                  </item>
-                  <item>
-                   <layout class="QHBoxLayout" name="horizontalLayout">
-                    <item>
-                     <widget class="QSlider" name="rawDisplayScale">
-                      <property name="minimum">
-                       <number>1</number>
-                      </property>
-                      <property name="maximum">
-                       <number>255</number>
-                      </property>
-                      <property name="value">
-                       <number>255</number>
-                      </property>
-                      <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QLabel" name="label_2">
-                      <property name="text">
-                       <string>Display Scale </string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QSpinBox" name="rawDisplayScaleSpinBox">
-                      <property name="maximum">
-                       <number>255</number>
-                      </property>
-                      <property name="value">
-                       <number>255</number>
-                      </property>
-                     </widget>
-                    </item>
-                   </layout>
-                  </item>
-                 </layout>
+                 <widget class="QLabel" name="label">
+                  <property name="font">
+                   <font>
+                    <pointsize>14</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>File List</string>
+                  </property>
+                 </widget>
                 </item>
                 <item>
-                 <widget class="QGroupBox" name="rawImageSettings">
+                 <widget class="QComboBox" name="fileListComboBox">
                   <property name="minimumSize">
                    <size>
-                    <width>240</width>
+                    <width>200</width>
                     <height>0</height>
                    </size>
                   </property>
-                  <property name="title">
-                   <string>Settings and Control</string>
+                  <property name="font">
+                   <font>
+                    <pointsize>8</pointsize>
+                   </font>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="verticalSpacer">
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>20</width>
+                    <height>40</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="fileInfoLayout">
+                <item>
+                 <widget class="QLabel" name="label_4">
+                  <property name="font">
+                   <font>
+                    <pointsize>14</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>File Info</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QTextBrowser" name="fileInfo">
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                   </font>
                   </property>
                  </widget>
                 </item>
                </layout>
-              </widget>
-             </widget>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="frameSliderLayout">
-              <item>
-               <widget class="QScrollBar" name="frameSelector">
-                <property name="minimumSize">
-                 <size>
-                  <width>700</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="pageStep">
-                 <number>1</number>
-                </property>
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="invertedAppearance">
-                 <bool>false</bool>
-                </property>
-               </widget>
               </item>
               <item>
-               <widget class="QSpinBox" name="frameNumberSpinBox">
-                <property name="font">
-                 <font>
-                  <pointsize>12</pointsize>
-                  <weight>75</weight>
-                  <bold>true</bold>
-                 </font>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="frameIndexLabel">
-                <property name="font">
-                 <font>
-                  <family>Arial</family>
-                  <pointsize>12</pointsize>
-                  <weight>75</weight>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Frame Index</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLineEdit" name="playbackRate">
-                <property name="maximumSize">
-                 <size>
-                  <width>40</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>30</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="fpsLabel">
-                <property name="font">
-                 <font>
-                  <family>Arial</family>
-                  <pointsize>12</pointsize>
-                  <weight>75</weight>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>FPS</string>
-                </property>
-               </widget>
+               <layout class="QVBoxLayout" name="frameInfoLayout">
+                <item>
+                 <widget class="QLabel" name="label_6">
+                  <property name="font">
+                   <font>
+                    <pointsize>14</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Frame Info</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QTextBrowser" name="frameInfo">
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
               </item>
              </layout>
             </item>
             <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_6">
+             <layout class="QVBoxLayout" name="plotLayout">
               <item>
-               <layout class="QHBoxLayout" name="controlButtonLayout">
-                <item>
-                 <layout class="QHBoxLayout" name="frameNavLayout">
-                  <item>
-                   <widget class="QPushButton" name="playButton">
-                    <property name="font">
-                     <font>
-                      <family>Arial</family>
-                      <pointsize>12</pointsize>
-                      <weight>75</weight>
-                      <bold>true</bold>
-                     </font>
-                    </property>
-                    <property name="text">
-                     <string>PLAY</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QPushButton" name="prevButton">
-                    <property name="font">
-                     <font>
-                      <family>Arial</family>
-                      <pointsize>12</pointsize>
-                      <weight>75</weight>
-                      <bold>true</bold>
-                     </font>
-                    </property>
-                    <property name="text">
-                     <string>PREV</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QPushButton" name="nextButton">
-                    <property name="font">
-                     <font>
-                      <family>Arial</family>
-                      <pointsize>12</pointsize>
-                      <weight>75</weight>
-                      <bold>true</bold>
-                     </font>
-                    </property>
-                    <property name="text">
-                     <string>NEXT</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QPushButton" name="quitButton">
-                    <property name="font">
-                     <font>
-                      <family>Arial</family>
-                      <pointsize>12</pointsize>
-                      <weight>75</weight>
-                      <bold>true</bold>
-                     </font>
-                    </property>
-                    <property name="text">
-                     <string>QUIT</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-               </layout>
+               <widget class="QLabel" name="label_3">
+                <property name="font">
+                 <font>
+                  <pointsize>14</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Plot View</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="GraphicsView" name="graphicsView"/>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="imageViewLayout">
+            <item>
+             <widget class="QLabel" name="label_5">
+              <property name="font">
+               <font>
+                <pointsize>14</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Image View</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="GraphicsView" name="rawImageView">
+              <property name="minimumSize">
+               <size>
+                <width>900</width>
+                <height>640</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="displayScaleLayout">
+              <item>
+               <widget class="QSlider" name="rawDisplayScale">
+                <property name="minimum">
+                 <number>1</number>
+                </property>
+                <property name="maximum">
+                 <number>255</number>
+                </property>
+                <property name="value">
+                 <number>255</number>
+                </property>
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_2">
+                <property name="text">
+                 <string>Display Scale </string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="rawDisplayScaleSpinBox">
+                <property name="maximum">
+                 <number>255</number>
+                </property>
+                <property name="value">
+                 <number>255</number>
+                </property>
+               </widget>
               </item>
              </layout>
             </item>
            </layout>
           </item>
          </layout>
-        </widget>
-        <widget class="QWidget" name="tab">
-         <attribute name="title">
-          <string>Log</string>
-         </attribute>
-         <layout class="QVBoxLayout" name="verticalLayout_3">
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="frameSliderLayout">
           <item>
-           <widget class="ConsoleWidget" name="pythonConsole" native="true"/>
+           <widget class="QScrollBar" name="frameSelector">
+            <property name="minimumSize">
+             <size>
+              <width>700</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="pageStep">
+             <number>1</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="invertedAppearance">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QSpinBox" name="frameNumberSpinBox">
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="frameIndexLabel">
+            <property name="font">
+             <font>
+              <family>Arial</family>
+              <pointsize>12</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Frame Index</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="playbackRate">
+            <property name="maximumSize">
+             <size>
+              <width>40</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>30</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="fpsLabel">
+            <property name="font">
+             <font>
+              <family>Arial</family>
+              <pointsize>12</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>FPS</string>
+            </property>
+           </widget>
           </item>
          </layout>
-        </widget>
-       </widget>
-      </item>
-     </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="buttonLayout">
+          <item>
+           <layout class="QHBoxLayout" name="controlButtonLayout">
+            <item>
+             <layout class="QHBoxLayout" name="frameNavLayout">
+              <item>
+               <widget class="QPushButton" name="playButton">
+                <property name="font">
+                 <font>
+                  <family>Arial</family>
+                  <pointsize>12</pointsize>
+                  <weight>75</weight>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>PLAY</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="prevButton">
+                <property name="font">
+                 <font>
+                  <family>Arial</family>
+                  <pointsize>12</pointsize>
+                  <weight>75</weight>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>PREV</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="nextButton">
+                <property name="font">
+                 <font>
+                  <family>Arial</family>
+                  <pointsize>12</pointsize>
+                  <weight>75</weight>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>NEXT</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="exportButton">
+                <property name="font">
+                 <font>
+                  <family>Arial</family>
+                  <pointsize>12</pointsize>
+                  <weight>75</weight>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>EXPORT</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="quitButton">
+                <property name="font">
+                 <font>
+                  <family>Arial</family>
+                  <pointsize>12</pointsize>
+                  <weight>75</weight>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>QUIT</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+       </layout>
+       <zorder></zorder>
+       <zorder></zorder>
+       <zorder></zorder>
+       <zorder>label_6</zorder>
+       <zorder>fileInfo</zorder>
+       <zorder></zorder>
+      </widget>
+      <widget class="QWidget" name="tab">
+       <attribute name="title">
+        <string>Log</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="ConsoleWidget" name="pythonConsole" native="true"/>
+        </item>
+       </layout>
+      </widget>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -307,7 +428,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1591</width>
+     <width>1518</width>
      <height>21</height>
     </rect>
    </property>
@@ -316,6 +437,7 @@
      <string>File</string>
     </property>
     <addaction name="actionOpen_File"/>
+    <addaction name="actionOpen_Directory"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
@@ -336,6 +458,11 @@
   <action name="actionOpen_File">
    <property name="text">
     <string>Open File</string>
+   </property>
+  </action>
+  <action name="actionOpen_Directory">
+   <property name="text">
+    <string>Open Directory</string>
    </property>
   </action>
  </widget>

@@ -82,7 +82,7 @@ class RawImage:
         self.ram_available = virtual_memory().available
 
         # Get the number of frames in the file
-        self.frames_in_file = int((self.file_size - self.header_length) / self.frame_size_in_bytes())
+        self.frames_in_file = int((self.file_size - self.file_header_length) / self.frame_size_in_bytes())
         LOG.info('Found ' + str(self.frames_in_file) + ' frames in ' + self.filepath)
 
     def unpack(self, format_string, names, raw_data):
@@ -132,11 +132,11 @@ class RawImage:
 
             self.file_handle.seek(0)
             res = self.file_handle.read(2)
-            self.header_length = struct.unpack('H', res)[0]
+            self.file_header_length = struct.unpack('H', res)[0]
 
             # read the rest of the header
             self.file_handle.seek(0)
-            res = self.file_handle.read(self.header_length)
+            res = self.file_handle.read(self.file_header_length)
             self.file_header = self.unpack(self.file_header_format, self.file_header_params, res)
 
     def frame_size_in_bytes(self):
@@ -152,7 +152,7 @@ class RawImage:
 
     def read_frame(self, index):
 
-        frame_offset = self.header_length + index * self.frame_size_in_bytes()
+        frame_offset = self.file_header_length + index * self.frame_size_in_bytes()
         bpp = bpp = self.file_header['pixel_format']
         frame_pixels = self.frame_pixels()
 

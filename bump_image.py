@@ -8,6 +8,7 @@ Distributed under MIT license. See license.txt for more information.
 
 import os
 import glob
+import json
 import logging
 import numpy as np
 import pyqtgraph as pg
@@ -35,6 +36,9 @@ class MainWindow(TemplateBaseClass):
     def __init__(self, argv):
 
         self.filepath = None
+        self.exportpath = None
+        self.bindir = None
+        self.all_bin_files = []
         self.playing = False
 
 
@@ -82,17 +86,66 @@ class MainWindow(TemplateBaseClass):
         self.ui.playButton.clicked.connect(self.togglePlay)
         self.ui.prevButton.clicked.connect(self.prevFrame)
         self.ui.nextButton.clicked.connect(self.nextFrame)
+        self.ui.exportButton.clicked.connect(self.export_bin_file)
         self.ui.frameSelector.valueChanged.connect(self.setFrame)
         self.ui.playbackRate.editingFinished.connect(self.updatePlaybackRate)
         self.ui.rawDisplayScale.valueChanged.connect(self.setRawScale)
 
         # menu
         self.ui.actionOpen_File.triggered.connect(self.open_bin_file)
+        self.ui.actionOpen_Directory.triggered.connect(self.open_dirs)
+
+        self.ui.fileListComboBox.currentIndexChanged.connect(self.get_bin_file_from_dir)
+
+    def open_dirs(self):
+
+        dir_path = QtGui.QFileDialog.getExistingDirectory(self, 'Select Bin Directory',
+                                                          'c:\\Users\\paul\\Downloads')
+
+        if dir_path:
+            self.bindir = dir_path
+
+            self.all_bin_files = glob.glob(os.path.join(self.bindir, '**', '*.bin'), recursive=True)
+
+            self.ui.fileListComboBox.clear()
+            for bin_file in self.all_bin_files:
+                self.ui.fileListComboBox.addItem(os.path.basename(bin_file))
+
+    def get_bin_file_from_dir(self, file_index):
+
+        if file_index < len(self.all_bin_files):
+            file_path = self.all_bin_files[file_index]
+            self.load_bin_file(file_path)
 
     def open_bin_file(self):
+        file_path = QtGui.QFileDialog.getOpenFileName(self, 'Open Bin File',
+                                                      'c:\\Users\\paul\\Downloads', "Bin files (*.bin)")
+        if file_path:
+            self.ui.fileListComboBox.clear()
+            self.ui.fileListComboBox.addItem(os.path.basename(file_path[0]))
+            self.load_bin_file(file_path[0])
 
-            self.filepath = QtGui.QFileDialog.getOpenFileName(self, 'Open Bin File',
-                                                              'c:\\Users\\paul\\Downloads', "Bin files (*.bin)")[0]
+    def export_bin_file(self):
+        if self.filepath is not None:
+            dir_path = QtGui.QFileDialog.getExistingDirectory(self, 'Select Export Directory',
+                                                              os.path.dirname(self.filepath))
+            if dir_path:
+                LOG.info('Exporting: ' + self.filepath)
+                raw_export = RawImageExporter(self.filepath, dir_path)
+                self.exportpath = os.path.join(dir_path,os.path.basename(self.filepath)[:-4] + '.tiff')
+                raw_export.start()
+                raw_export.exportDone.connect(self.export_finished)
+
+    def export_finished(self, done=True):
+        if done and self.exportpath:
+            ret = QtGui.QMessageBox.information(self, 'Bin File Export', 'Exported bin file to: ' + self.exportpath)
+
+    def load_bin_file(self, file_path):
+
+        print(file_path)
+
+        if file_path:
+            self.filepath = file_path
             LOG.info('File selected: ' + self.filepath)
             self.raw_file_handler = RawImageLoader(self.filepath)
             self.raw_file_handler.start()
@@ -102,6 +155,12 @@ class MainWindow(TemplateBaseClass):
             self.setFrameIndex(0)
             self.ui.rawDisplayScale.setValue(np.max(self.image))
             self.drawRawFrame()
+
+            # update file header info
+            self.ui.fileInfo.clear()
+            self.ui.fileInfo.insertPlainText(
+                json.dumps(self.raw_file_handler.raw_image.file_header, indent=4)
+            )
 
     def playback(self):
         self.setFrameIndex(self.frame_index+1)
@@ -149,6 +208,9 @@ class MainWindow(TemplateBaseClass):
 
     def drawRawFrame(self):
         self.rawDataDisplay.draw(self.image, self.ui.rawDisplayScale.value())
+        # update frame info
+        self.ui.frameInfo.clear()
+        self.ui.frameInfo.insertPlainText(json.dumps(self.image_header, indent=4, sort_keys=True))
 
     def setRawScale(self, scale):
         self.rawDataDisplay.data_item.setLevels([0, scale])

@@ -22,7 +22,7 @@ class RawImageExporter(QtCore.QThread):
 
         rw = RawImage(self.bin_path)
         rw.export_as_tiff(output_path=self.output_path)
-
+        self.exportDone.emit(True)
         self.deleteLater()
 
 
@@ -63,7 +63,7 @@ class RawImageLoader(QtCore.QThread):
         if index < self.raw_image.frames_in_file:
             while self.frame_header[index] is None:
                 time.sleep(0.1)
-                LOG.warn('Waiting for frame: ' + str(index) + '...')
+                LOG.info('Waiting for frame: ' + str(index) + '...')
 
             return self.frame_header[index], self.display_data[index]
         else:
@@ -83,7 +83,7 @@ class RawImageLoader(QtCore.QThread):
                 image = cv2.resize(image, (int(image.shape[1]*scale), int(image.shape[0]*scale)))
                 self.display_data[index] = image
             index += 1
-            LOG.warn('Loading frame: ' +str(index) + '...')
+            LOG.info('Loading frame: ' +str(index) + '...')
         self.bin_loaded = True
         self.loadingDone.emit(True)
 
