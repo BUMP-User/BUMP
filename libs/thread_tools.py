@@ -26,8 +26,6 @@ class RawImageExporter(QtCore.QThread):
         self.deleteLater()
 
 
-
-
 class RawImageLoader(QtCore.QThread):
 
     # signals

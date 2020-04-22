@@ -11,6 +11,7 @@ import json
 import struct
 import datetime
 import numpy as np
+import pyqtgraph as pg
 from tifffile import TiffWriter
 from psutil import virtual_memory
 from libs.logger import LOG
