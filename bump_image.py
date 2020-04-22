@@ -9,6 +9,7 @@ Distributed under MIT license. See license.txt for more information.
 import os
 import glob
 import json
+import time
 import logging
 import numpy as np
 import pyqtgraph as pg
@@ -150,9 +151,12 @@ class MainWindow(TemplateBaseClass):
             self.raw_file_handler = RawImageLoader(self.filepath)
             self.raw_file_handler.start()
 
+            time.sleep(0.5)
+
             self.rawDataDisplay = ImageDisplay(pg.ViewBox(), self.ui.rawImageView, pg.ImageItem())
 
             self.setFrameIndex(0)
+
             self.ui.rawDisplayScale.setValue(np.max(self.image))
             self.drawRawFrame()
 

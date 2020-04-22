@@ -68,6 +68,10 @@ class RawImage:
         self.frame_headers = []
         self.frame_data = []
 
+        # actual image width and height with raw size and binning
+        self.img_width = 0
+        self.img_height = 0
+
         # Try to open the file and read
         try:
             self.file_handle = open(self.filepath, "rb")
@@ -77,6 +81,7 @@ class RawImage:
             LOG.error(e)
             self.file_valid = False
 
+        # read the file header and set image sizes accordingly
         self.read_file_header()
 
         # check if we can load all frames into RAM
@@ -140,21 +145,23 @@ class RawImage:
             res = self.file_handle.read(self.file_header_length)
             self.file_header = self.unpack(self.file_header_format, self.file_header_params, res)
 
+            self.img_height = int(self.file_header['raw_image_height'] / self.file_header['vert_binning'])
+            self.img_width = int(self.file_header['raw_image_width'] / self.file_header['horz_binning'])
+
     def frame_size_in_bytes(self):
 
         bpp = self.file_header['pixel_format']
 
-        return self.frame_header_size + \
-               bpp*self.file_header['raw_image_width']*self.file_header['raw_image_height']
+        return self.frame_header_size + bpp * self.img_width*self.img_height
 
     def frame_pixels(self):
 
-        return self.file_header['raw_image_width'] * self.file_header['raw_image_height']
+        return self.img_width*self.img_height
 
     def read_frame(self, index):
 
         frame_offset = self.file_header_length + index * self.frame_size_in_bytes()
-        bpp = bpp = self.file_header['pixel_format']
+        bpp = self.file_header['pixel_format']
         frame_pixels = self.frame_pixels()
 
         if self.file_valid:
@@ -179,5 +186,5 @@ class RawImage:
                 return None
             else:
                 # reshape into image
-                image = np.reshape(res, (self.file_header['raw_image_height'], self.file_header['raw_image_width']))
+                image = np.reshape(res, (self.img_height, self.img_width))
                 return frame_header, image
