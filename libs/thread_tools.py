@@ -60,7 +60,7 @@ class RawImageLoader(QtCore.QThread):
     def get_frame(self, index):
         if index < self.raw_image.frames_in_file:
             while self.frame_header[index] is None:
-                time.sleep(0.1)
+                time.sleep(0.2)
                 LOG.info('Waiting for frame: ' + str(index) + '...')
 
             return self.frame_header[index], self.display_data[index]
