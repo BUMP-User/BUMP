@@ -22,7 +22,11 @@ from libs.argparse_tools import parse_args
 
 pg.mkQApp()
 
-## Define main window class from template
+"""
+Define main window class from template
+The .ui file is created in Qt Designer and loaded
+here. It must be on the same path as this file.
+"""
 path = os.path.dirname(os.path.abspath(__file__))
 uiFile = os.path.join(path, 'bump_image.ui')
 WindowTemplate, TemplateBaseClass = pg.Qt.loadUiType(uiFile)
@@ -153,7 +157,8 @@ class MainWindow(TemplateBaseClass):
 
             time.sleep(0.5)
 
-            self.rawDataDisplay = ImageDisplay(pg.ViewBox(), self.ui.rawImageView, pg.ImageItem())
+            self.rawDataDisplay = ImageDisplay(pg.ViewBox(), self.ui.rawImageView)
+            self.rawDataDisplay.line_tool.sigRegionChanged.connect(self.updateLine)
 
             self.setFrameIndex(0)
 
@@ -210,8 +215,17 @@ class MainWindow(TemplateBaseClass):
         self.setFrameIndex(self.frame_index + 1)
         self.drawRawFrame()
 
+    def updateLine(self):
+        line_data = self.rawDataDisplay.get_line(self.image)
+        self.ui.linePlot.clear()
+        self.ui.linePlot.plot(line_data[:, 0], pen='r')
+        self.ui.linePlot.plot(line_data[:, 1], pen='b')
+        self.ui.linePlot.plot(line_data[:, 2], pen='g')
+
     def drawRawFrame(self):
         self.rawDataDisplay.draw(self.image, self.ui.rawDisplayScale.value())
+        self.ui.linePlot.clear()
+        self.updateLine()
         # update frame info
         self.ui.frameInfo.clear()
         self.ui.frameInfo.insertPlainText(json.dumps(self.image_header, indent=4, sort_keys=True))

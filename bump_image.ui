@@ -70,7 +70,7 @@
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
-              <widget class="QWidget" name="">
+              <widget class="QWidget" name="layoutWidget">
                <layout class="QVBoxLayout" name="fileListLayout">
                 <item>
                  <widget class="QLabel" name="label">
@@ -114,7 +114,7 @@
                 </item>
                </layout>
               </widget>
-              <widget class="QWidget" name="">
+              <widget class="QWidget" name="layoutWidget">
                <layout class="QVBoxLayout" name="fileInfoLayout">
                 <item>
                  <widget class="QLabel" name="label_4">
@@ -139,7 +139,7 @@
                 </item>
                </layout>
               </widget>
-              <widget class="QWidget" name="">
+              <widget class="QWidget" name="layoutWidget">
                <layout class="QVBoxLayout" name="frameInfoLayout">
                 <item>
                  <widget class="QLabel" name="label_6">
@@ -165,7 +165,7 @@
                </layout>
               </widget>
              </widget>
-             <widget class="QWidget" name="">
+             <widget class="QWidget" name="layoutWidget">
               <layout class="QVBoxLayout" name="plotLayout">
                <item>
                 <widget class="QLabel" name="label_3">
@@ -180,12 +180,12 @@
                 </widget>
                </item>
                <item>
-                <widget class="GraphicsView" name="graphicsView"/>
+                <widget class="PlotWidget" name="linePlot"/>
                </item>
               </layout>
              </widget>
             </widget>
-            <widget class="QWidget" name="">
+            <widget class="QWidget" name="layoutWidget">
              <layout class="QVBoxLayout" name="imageViewLayout">
               <item>
                <widget class="QLabel" name="label_5">
@@ -422,11 +422,6 @@
         </item>
        </layout>
        <zorder></zorder>
-       <zorder></zorder>
-       <zorder></zorder>
-       <zorder>label_6</zorder>
-       <zorder>fileInfo</zorder>
-       <zorder></zorder>
       </widget>
       <widget class="QWidget" name="tab">
        <attribute name="title">
@@ -496,6 +491,11 @@
    <extends>QWidget</extends>
    <header>pyqtgraph.console</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>PlotWidget</class>
+   <extends>QGraphicsView</extends>
+   <header>pyqtgraph.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
