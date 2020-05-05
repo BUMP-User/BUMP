@@ -59,11 +59,25 @@ class RawImage:
             'height'
         ]
 
+        self.frame_header_format_fmt2 = 'QQQIIIII'
+        self.frame_header_params_fmt2 = [
+            'unixtime',
+            'system_micros',
+            'camera_micros,',
+            'frame_number',
+            'width',
+            'height',
+            'position',
+            'flashtype'
+        ]
+
+
         self.can_to_ram = False
 
-        # lists for frame headers and data
+        self.file_fmt = 1
         self.file_header_length = 0
         self.frame_header_size = 36
+        self.frame_header_size_fmt2 = 44
         self.file_header = None
         self.frame_headers = []
         self.frame_data = []
@@ -145,6 +159,8 @@ class RawImage:
             res = self.file_handle.read(self.file_header_length)
             self.file_header = self.unpack(self.file_header_format, self.file_header_params, res)
 
+            self.file_fmt = self.file_header['format']
+
             self.img_height = int(self.file_header['raw_image_height'] / self.file_header['vert_binning'])
             self.img_width = int(self.file_header['raw_image_width'] / self.file_header['horz_binning'])
 
@@ -152,7 +168,10 @@ class RawImage:
 
         bpp = self.file_header['pixel_format']
 
-        return self.frame_header_size + bpp * self.img_width*self.img_height
+        if self.file_fmt == 1:
+            return self.frame_header_size + bpp * self.img_width * self.img_height
+        elif self.file_fmt == 2:
+            return self.frame_header_size_fmt2 + bpp * self.img_width*self.img_height
 
     def frame_pixels(self):
 
@@ -170,11 +189,18 @@ class RawImage:
             self.file_handle.seek(frame_offset, 0)
 
             # read the header
-            frame_header = self.unpack(
-                self.frame_header_format,
-                self.frame_header_params,
-                self.file_handle.read(self.frame_header_size)
-            )
+            if self.file_fmt == 1:
+                frame_header = self.unpack(
+                    self.frame_header_format,
+                    self.frame_header_params,
+                    self.file_handle.read(self.frame_header_size)
+                )
+            elif self.file_fmt == 2:
+                frame_header = self.unpack(
+                    self.frame_header_format_fmt2,
+                    self.frame_header_params_fmt2,
+                    self.file_handle.read(self.frame_header_size_fmt2)
+                )
 
             # read the frame pixels
             if bpp == 1:
