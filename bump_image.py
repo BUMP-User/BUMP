@@ -88,6 +88,7 @@ class MainWindow(TemplateBaseClass):
     def set_ui_handlers(self):
         # UI handlers
         self.ui.frameSelector.valueChanged.connect(self.ui.frameNumberSpinBox.setValue)
+        self.ui.frameNumberSpinBox.valueChanged.connect(self.ui.frameSelector.setValue)
         self.ui.playButton.clicked.connect(self.togglePlay)
         self.ui.prevButton.clicked.connect(self.prevFrame)
         self.ui.nextButton.clicked.connect(self.nextFrame)

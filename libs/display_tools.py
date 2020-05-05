@@ -1,5 +1,8 @@
 import cv2
+import numpy as np
 import pyqtgraph as pg
+
+pg.setConfigOptions(imageAxisOrder='row-major')
 
 class ImageDisplay:
 
@@ -9,7 +12,7 @@ class ImageDisplay:
         self.view = view
         self.view.setCentralItem(self.view_box)
         self.view_box.setAspectLocked(True)
-        self.line_tool = pg.LineSegmentROI([(10,10),(10,100)])
+        self.line_tool = pg.LineSegmentROI([(10, 10), (10, 100)])
         self.view_box.addItem(self.line_tool)
         self.view_box.addItem(self.data_item)
         # Contrast/color control
@@ -39,8 +42,8 @@ class ImageDisplay:
     def draw(self, data, color_scale=255, size_scale=1):
 
         scale = [0, color_scale]
-        output = cv2.transpose(data)
-        self.data_item.setImage(output, autoLevels=False, levels=scale, autoDownsample=True)
+        data = np.flipud(data)
+        self.data_item.setImage(data, autoLevels=False, levels=scale, autoDownsample=True)
 
 class ImageView:
 
